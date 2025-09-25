@@ -1,0 +1,18 @@
+# Node / Expo
+node-modules/
+.expo/
+dist/
+*.log
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# SO
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
