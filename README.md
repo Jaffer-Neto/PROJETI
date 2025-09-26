@@ -7,5 +7,7 @@
 - library: imagens, funcoes
 
 ## Como rodar
-- Frontend: ver seção "Frontend"
-- Backend: ver seção "Backend"
+### Programas necessários
+#### Node.js(https://nodejs.org/en/)
+- Necessário para rodar o Expo/React Native.
+- Durante a instalação, marque a opção “Add to PATH”.

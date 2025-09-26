@@ -13,8 +13,8 @@ app.add_middleware(
 
 TUTORIALS = [
     {
-        "id": "rcp-leigo",
-        "title": "RCP (leigo) – passos básicos",
+        "id": "rcp",
+        "title": "RCP (Parada Cárdiaca)",
         "steps": [
             "Verifique segurança da cena",
             "Confirme responsividade e respiração",
