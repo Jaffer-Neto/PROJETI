@@ -59,7 +59,7 @@
     - Escaneie o Qrcode que aparece no terminal
     - O app será carregado no celular
 
-importante: O celular e o pc devem estar conectados no mesmo Wi-fi
+__importante: O celular e o pc devem estar conectados no mesmo Wi-fi__
 
 ## Rodando o backend
 - **No Vs Code**
