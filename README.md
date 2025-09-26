@@ -59,7 +59,7 @@
     - Escaneie o Qrcode que aparece no terminal
     - O app será carregado no celular
 
-### importante: O celular e o pc devem estar conectados no mesmo Wi-fi
+importante: O celular e o pc devem estar conectados no mesmo Wi-fi
 
 ## Rodando o backend
 - **No Vs Code**
@@ -91,12 +91,8 @@
 - Cada um deve editar essa linha com o seu própio ip, mantendo o :8000
 
 ## Teste final
-Abra o backend (python main.py) → veja no terminal rodando em http://0.0.0.0:8000.
-
-Abra o frontend (npm start) → leia o QR no Expo Go.
-
-A tela inicial deve aparecer com os botões de emergência.
-
-Toque em “📚 Ver tutoriais” → deve listar os tutoriais vindos da API.
-
-Toque em um tutorial → abre a tela de detalhes com os passos.
+- Abra o backend (python main.py) → veja no terminal rodando em http://0.0.0.0:8000.
+- Abra o frontend (npm start) → leia o QR no Expo Go.
+- A tela inicial deve aparecer com os botões de emergência.
+- Toque em “📚 Ver tutoriais” → deve listar os tutoriais vindos da API.
+- Toque em um tutorial → abre a tela de detalhes com os passos.
