@@ -26,7 +26,7 @@
    - [Android](https://play.google.com/store/apps/details?id=host.exp.exponent) | [iOS](https://apps.apple.com/app/expo-go/id982107779)  
    - Para rodar o app escaneando o QR Code.
 
-## Executando o programa
+## Conando o Repositório git
 -  **No Vs Code**
     - Entre em "SOURCE CONTROL" (CTRL+SHIFT+G)
     - Selecione "CLONE REPOSITORY"
@@ -34,9 +34,19 @@
     - Selecione uma pasta para guardar os arquivos
 
 - **Com o repositório já clonado**
--A estrutura de pastas será:
-    /PROJETI
-    /backend
-    /database
-    /frontend
-    /library
+- A estrutura de pastas será:
+    - /PROJETI
+    - /backend
+    - /database
+    - /frontend
+    - /library
+
+## Rodando o frontend
+- **No Vs Code**
+    - Abra um novo terminal: View -> Terminal | CTRL+'
+    - Aperte na seta para baixo que está entre o + e ...
+    - Selecione "Command Prompt"
+    - **1. Entre na pasta**
+        - cd frontend
+    - **2. Instale as dependências**
+        - npm install
