@@ -34,7 +34,8 @@
     - Selecione uma pasta para guardar os arquivos
 
 - **Com o repositório já clonado**
-    -A estrutura de pastas será:
+-A estrutura de pastas será:
+    /PROJETI
     /backend
     /database
     /frontend
