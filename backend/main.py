@@ -1,5 +1,6 @@
-from typing import List
-from fastapi import FastAPI
+# main.py
+from typing import List, Optional
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -7,8 +8,26 @@ from pydantic import BaseModel, Field
 class Tutorial(BaseModel):
     id: str = Field(..., description="Identificador único do tutorial (slug)")
     title: str = Field(..., description="Título do tutorial")
-    steps: List[str] = Field(..., description="Lista de passos do procedimento")
-    updatedAt: str = Field(..., description="Data da última atualização (formato ideal: YYYY-MM-DD)")
+
+    # Passos padrão (fallback para quando não houver perfil específico)
+    steps: List[str] = Field(..., description="Lista de passos do procedimento (padrão)")
+
+    # Campos opcionais por perfil (o app usa se existirem)
+    stepsAdult: Optional[List[str]] = Field(
+        default=None,
+        description="Passos específicos para Adulto (opcional)"
+    )
+    stepsChild: Optional[List[str]] = Field(
+        default=None,
+        description="Passos específicos para Criança (opcional)"
+    )
+    stepsNewborn: Optional[List[str]] = Field(
+        default=None,
+        description="Passos específicos para Recém-Nascido (opcional)"
+    )
+
+    updatedAt: str = Field(..., description="Data da última atualização (YYYY-MM-DD)")
+
 
 # Inicialização da aplicação FastAPI
 app = FastAPI(
@@ -16,84 +35,118 @@ app = FastAPI(
     description="API de suporte para atendimentos de primeiros socorros (APH)."
 )
 
-# 2. Configuração de CORS 
+# CORS (atenção em produção)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Atenção: limitar em produção!
+    allow_origins=["*"],  # limite em produção!
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Dados seria melhor levar para outro arquivo
+# === Dados de exemplo ===
+# Observação: agora alguns itens têm steps específicos por perfil;
+# os que não tiverem continuam funcionando via 'steps' (fallback).
 TUTORIALS: List[Tutorial] = [
     {
         "id": "rcp",
-        "title": "RCP (Parada Cárdiaca)",
+        "title": "RCP (Parada Cardíaca)",
         "steps": [
             "Verifique segurança da cena",
             "Confirme responsividade e respiração",
             "Ligue 192 e peça DEA",
-            "Compressões 100–120/min, ~5cm (adulto)"
+            "Compressões 100–120/min"
         ],
-        "updatedAt": "2025-09-01"
-    }, # <--- Vírgula OK
+        "stepsAdult": [
+            "Compressões a ~5 cm de profundidade (adulto)",
+            "Ventilações 30:2 se treinado e com barreira",
+        ],
+        "stepsChild": [
+            "Compressões a ~5 cm ou 1/3 do tórax (criança)",
+            "Use uma mão se necessário; ventilações 30:2",
+        ],
+        "stepsNewborn": [
+            "RCP 3:1 (3 compressões / 1 ventilação)",
+            "Aquecimento e via aérea primeiro; O2 conforme protocolo",
+        ],
+        "updatedAt": "2025-09-26"
+    },
     {
         "id": "engasgo",
-        "title": "Engasgo (adulto consciente)",
+        "title": "Engasgo (consciente)",
         "steps": [
-            "Pergunte se está engasgado",
-            "5 tapas nas costas",
-            "Manobra de Heimlich",
+            "Pergunte se está engasgado e se consegue tossir/falar",
+            "Se não conseguir, aplique 5 tapas nas costas",
+            "Manobra abdominal (Heimlich) conforme necessário",
             "Ligue 192"
         ],
-        "updatedAt": "2025-09-01"
-    }, # <--- Vírgula OK
+        "stepsChild": [
+            "Para criança pequena: ajoelhe-se ao nível da criança",
+            "Combine tapas nas costas e compressões torácicas",
+        ],
+        "stepsNewborn": [
+            "Alternar 5 tapas nas costas e 5 compressões no esterno",
+            "Posicionamento: cabeça mais baixa que o tronco",
+        ],
+        "updatedAt": "2025-09-26"
+    },
     {
         "id": "queimadura",
         "title": "Queimaduras (Primeiros Socorros)",
         "steps": [
-            "Remova roupas e joias (se não grudadas).",
-            "Resfrie com água corrente fria (10 a 20 minutos).",
-            "Cubra com curativo limpo e seco.",
-            "NÃO use gelo ou manteiga."
+            "Resfrie com água corrente (10–20 min)",
+            "Remova acessórios se não grudados",
+            "Cubra com curativo limpo e seco",
+            "NÃO use gelo ou manteiga"
         ],
         "updatedAt": "2025-09-26"
-    }, 
+    },
     {
         "id": "sangramento",
         "title": "Hemorragia Externa (Sangramento)",
         "steps": [
-            "Aplique pressão direta e firme sobre o ferimento.",
-            "Use um pano ou gaze limpa e não remova.",
-            "Se for um membro, eleve-o se não houver dor.",
-            "Ligue para emergência se não parar rapidamente."
+            "Pressão direta firme no ferimento",
+            "Não remova o curativo se encharcar — sobreponha",
+            "Eleve o membro se não houver dor/lesão",
+            "Acione emergência se persistir"
         ],
         "updatedAt": "2025-09-26"
-    }, # <--- Vírgula OK
+    },
     {
         "id": "convulsao",
         "title": "Convulsões (Crise Epiléptica)",
         "steps": [
-            "Mantenha a calma e afaste objetos perigosos.",
-            "Coloque algo macio sob a cabeça.",
-            "Vire a pessoa gentilmente de lado.",
-            "Não coloque nada na boca e cronometre o tempo."
+            "Afaste objetos perigosos e proteja a cabeça",
+            "Cronometre a duração",
+            "Após a crise, posicione em decúbito lateral",
+            "Não coloque nada na boca"
         ],
         "updatedAt": "2025-09-26"
-    } # <--- Último item (sem vírgula, está correto)
+    },
 ]
 
 
 @app.get("/health", summary="Verifica a saúde da API")
 def health() -> dict:
-    """Endpoint simples para verificar se a API está online."""
     return {"ok": True}
 
-@app.get("/tutorials", response_model=List[Tutorial], summary="Lista todos os tutoriais de primeiros socorros")
+
+@app.get("/tutorials", response_model=List[Tutorial], summary="Lista todos os tutoriais")
 def list_tutorials():
-    """Retorna a lista completa de tutoriais disponíveis."""
     return TUTORIALS
+
+
+@app.get(
+    "/tutorials/{tutorial_id}",
+    response_model=Tutorial,
+    summary="Obtém um tutorial pelo ID"
+)
+def get_tutorial(tutorial_id: str):
+    for t in TUTORIALS:
+        if t.id == tutorial_id:
+            return t
+    raise HTTPException(status_code=404, detail="Tutorial não encontrado")
+
 
 if __name__ == "__main__":
     import uvicorn

@@ -1,4 +1,4 @@
-export type Screen = 'home' | 'tutorials' | 'infpaciente' | 'detail';
+export type Screen = 'home' | 'tutorials' | 'detail';
 
 export type Tutorial = {
     id: string;
