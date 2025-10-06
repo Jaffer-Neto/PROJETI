@@ -54,6 +54,8 @@
     - **3. Inicie o servidor expo**
         - npm start
 
+Não ligue para os erros, são falsos, aperte CTRL+SHIFT+P -> digite e selecione Developer: reload window.
+
 - **No celular**
     - Abra o Expo Go
     - Escaneie o Qrcode que aparece no terminal
